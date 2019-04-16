@@ -560,3 +560,36 @@ yarn-error.log
 **/build/
 
 # End of https://www.gitignore.io/api/node,java,vuejs,maven,gradle,angular,eclipse,database,intellij,java-web,reactnative
+
+
+# Spring Boot Initializer https://start.spring.io/
+HELP.md
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
