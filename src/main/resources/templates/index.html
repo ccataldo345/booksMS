@@ -11,8 +11,8 @@
 
 <div class="container">
 
-<h2><span th:text="${appName}"></span></h2>
-</br>
+    <h2><span th:text="${appName}"></span></h2>
+    </br>
 
     <h3>Books</h3>
 
@@ -24,7 +24,14 @@
             <th>ISBN-13</th>
             <th>Comments</th>
         </tr>
+        <tr th:each="book : ${books}">
+            <th scope="row" th:text="${book.getId()}"></th>
+            <td th:text="${book.getTitle()}"></td>
+            <td th:text="${book.getAuthor()}"></td>
+            <td th:text="${book.getIsbn()}"></td>
+        </tr>
     </table>
+</div>
 
 </body>
 </html>

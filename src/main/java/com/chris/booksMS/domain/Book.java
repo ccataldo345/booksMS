@@ -19,6 +19,9 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Book() {
+    }
+
     public Long getId() {
         return id;
     }
