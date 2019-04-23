@@ -17,20 +17,35 @@
     <h3>Books</h3>
 
     <table class="table">
+        <thead>
         <tr>
             <th>#</th>
             <th>Title</th>
             <th>Author</th>
             <th>ISBN-13</th>
             <th>Comments</th>
+            <th></th>
         </tr>
+        </thead>
         <tr th:each="book : ${books}">
             <th scope="row" th:text="${book.getId()}"></th>
             <td th:text="${book.getTitle()}"></td>
             <td th:text="${book.getAuthor()}"></td>
             <td th:text="${book.getIsbn()}"></td>
+            <td>
+                <div class="btn-group">
+                    <a>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                    </a>
+                    <a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </a>
+                    </form>
+                </div>
+            </td>
         </tr>
     </table>
+    <a class="btn btn-warning" float="right" href="">Add Book</a>
 </div>
 
 </body>
