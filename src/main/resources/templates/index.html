@@ -39,7 +39,9 @@
                         <button type="button" class="btn btn-warning">Edit</button>
                     </a>
                     <a>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <form th:action="@{'/book/{id}/delete'(id=${book.getId()})}" method="post">
+                            <input type="hidden">
+                            <button type="submit" class="btn btn-danger">Delete</button>
                     </a>
                     </form>
                 </div>
