@@ -36,14 +36,15 @@
             <td>
                 <div class="btn-group">
                     <a>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                    </a>
-                    <a>
-                        <form th:action="@{'/book/{id}/delete'(id=${book.getId()})}" method="post">
-                            <input type="hidden">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                    </a>
-                    </form>
+                        <a th:href="@{'/book/{id}'(id=${book.getId()})}">
+                            <button type="button" class="btn btn-warning">Edit</button>
+                        </a>
+                        <a>
+                            <form th:action="@{'/book/{id}/delete'(id=${book.getId()})}" method="post">
+                                <input type="hidden">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                        </a>
+                        </form>
                 </div>
             </td>
         </tr>

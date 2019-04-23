@@ -49,11 +49,22 @@ public class BookController {
         return "redirect:/";
     }
 
+    @GetMapping("/book/{id}")
+    public String editBook(@PathVariable("id") Long id, Model model) throws Throwable {
+        Book book = bookRepository.findById(id).orElseThrow(new Supplier<Throwable>() {
+            @Override
+            public Throwable get() {
+                return new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+        });
+        model.addAttribute("book", book);
+        return "edit-book";
+    }
+
     @PostMapping("/book/{id}/delete")
     public String deleteBook(@PathVariable("id") Long id) {
         bookRepository.deleteById(id);
         return "redirect:/";
     }
-
 
 }
