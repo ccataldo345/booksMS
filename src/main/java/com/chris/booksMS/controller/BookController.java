@@ -26,7 +26,7 @@ public class BookController {
     String appName;
 
     @GetMapping("/")
-    public String getAllBooks(Model model) {
+    public String home(Model model) {
         List<Book> allBooks = (List<Book>) bookRepository.findAll();
         model.addAttribute("books", allBooks);
         model.addAttribute("appName", appName);
@@ -66,5 +66,18 @@ public class BookController {
         bookRepository.deleteById(id);
         return "redirect:/";
     }
+
+    @GetMapping("/book/new")
+    public String newBook(Model model) {
+        model.addAttribute("book", new Book());
+        return "add-book";
+    }
+
+    @PostMapping("/book/add")
+    public String addNewBook(@ModelAttribute Book book) {
+        bookRepository.save(book);
+        return "redirect:/";
+    }
+
 
 }
