@@ -58,6 +58,7 @@ public class BookController {
             }
         });
         model.addAttribute("book", book);
+        model.addAttribute("appName", appName);
         return "edit-book";
     }
 
@@ -70,6 +71,7 @@ public class BookController {
     @GetMapping("/book/new")
     public String newBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("appName", appName);
         return "add-book";
     }
 

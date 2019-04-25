@@ -11,11 +11,12 @@
 
 <div class="container">
 
+    </br>
+    <h2><span th:text="${appName}"></span></h2>
+    </br>
+
     <div class="row">
         <div class="col-sm-6">
-
-            <h2><span th:text="${appName}"></span></h2>
-            </br>
 
             <h3>Edit Book</h3>
 
@@ -38,10 +39,32 @@
                 <button type="submit" class="btn btn-warning float-right">Update</button>
             </form>
         </div>
+
         <div class="col-sm-6">
+            <h2>Comments</h2>
+            <form action="index.html" method="post">
+                <div class="form-group">
+                    <label for="value">Comment</label>
+                    <textarea name="text" class="form-control" id="value" rows="6"
+                              placeholder="Comment"></textarea></br>
+                    <button type="submit" class="btn btn-warning float-right">Add comment</button>
+                </div>
+            </form>
+            <table class="table table-borderless">
+                <tbody>
+                <tr>
+                    <td>Date</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Comment</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </div>
-
+</div>
 </body>
 </html>
