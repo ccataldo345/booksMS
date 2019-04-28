@@ -1,6 +1,7 @@
 package com.chris.booksMS.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -10,16 +11,14 @@ public class Book {
     // https://stackoverflow.com/questions/39807483/sequence-hibernate-sequence-not-found-sql-statement
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String author;
     private String isbn;
 
-    public Book(Long id, String title, String author, String isbn) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-    }
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments;
 
     public Book() {
     }
@@ -56,13 +55,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                '}';
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

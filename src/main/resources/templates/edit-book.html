@@ -42,23 +42,24 @@
 
         <div class="col-sm-6">
             <h2>Comments</h2>
-            <form action="index.html" method="post">
+            <form th:action="@{'/book/{id}/comment'(id=${book.getId()})}" th:object="${comment}" method="post">
                 <div class="form-group">
                     <label for="value">Comment</label>
-                    <textarea name="text" class="form-control" id="value" rows="6"
-                              placeholder="Comment"></textarea></br>
+                    <textarea th:field="*{commentText}" name="text" class="form-control" id="value" rows="6"
+                              placeholder="Comment"></textarea>
+                    </br>
                     <button type="submit" class="btn btn-warning float-right">Add comment</button>
                 </div>
             </form>
-            <table class="table table-borderless">
+            <table class="table table-borderless" th:each="c : ${book.getComments()}">
                 <tbody>
                 <tr>
                     <td>Date</td>
-                    <td></td>
+                    <td th:text="${#dates.format(c.getDate(), 'dd-MM-yyyy HH:mm:ss')}"></td>
                 </tr>
                 <tr>
                     <td>Comment</td>
-                    <td></td>
+                    <td th:text="${c.getCommentText()}"></td>
                 </tr>
                 </tbody>
             </table>

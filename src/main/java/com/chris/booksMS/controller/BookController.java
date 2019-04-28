@@ -1,7 +1,9 @@
 package com.chris.booksMS.controller;
 
 import com.chris.booksMS.domain.Book;
+import com.chris.booksMS.domain.Comment;
 import com.chris.booksMS.repository.BookRepository;
+import com.chris.booksMS.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -22,15 +26,24 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     @Value("${spring.application.name}")
     String appName;
 
     @GetMapping("/")
     public String home(Model model) {
-        List<Book> allBooks = (List<Book>) bookRepository.findAll();
-        model.addAttribute("books", allBooks);
+        model.addAttribute("books", bookRepository.findAll());
         model.addAttribute("appName", appName);
         return "index";
+    }
+
+
+    @PostMapping("/book/{id}/delete")
+    public String deleteBook(@PathVariable("id") Long id) {
+        bookRepository.deleteById(id);
+        return "redirect:/";
     }
 
     @PostMapping("/book/{id}")
@@ -46,6 +59,7 @@ public class BookController {
         persistedBook.setAuthor(book.getAuthor());
         book = bookRepository.save(persistedBook);
         model.addAttribute("book", book);
+        model.addAttribute("comment", new Comment());
         return "redirect:/";
     }
 
@@ -59,13 +73,30 @@ public class BookController {
         });
         model.addAttribute("book", book);
         model.addAttribute("appName", appName);
+        model.addAttribute("comment", new Comment());
         return "edit-book";
     }
 
-    @PostMapping("/book/{id}/delete")
-    public String deleteBook(@PathVariable("id") Long id) {
-        bookRepository.deleteById(id);
-        return "redirect:/";
+    @PostMapping("/book/{id}/comment")
+    public String addComment(@PathVariable("id") Long id, @ModelAttribute Comment comment, Model model) throws Throwable {
+        Book book = bookRepository.findById(id).orElseThrow(new Supplier<Throwable>() {
+            @Override
+            public Throwable get() {
+                return new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+        });
+        List<Comment> comments = book.getComments();
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        comment.setDate(new Date());
+        comment = commentRepository.save(comment);
+        comments.add(comment);
+        book.setComments(comments);
+        bookRepository.save(book);
+        model.addAttribute("book", book);
+        model.addAttribute("comment", new Comment());
+        return "redirect:/book/" + id;
     }
 
     @GetMapping("/book/new")
@@ -80,6 +111,5 @@ public class BookController {
         bookRepository.save(book);
         return "redirect:/";
     }
-
 
 }

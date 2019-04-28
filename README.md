@@ -13,3 +13,22 @@ Technologies:
 2. Spring boot
 3. H2
 4. Thymeleaf
+
+
+Usage:
+
+1. Run the application:
+ 
+	./gradlew bootRun
+
+2. Or build the JAR file:
+ 
+	./gradlew build
+
+    and then run the JAR file:
+
+	java -jar build/libs/booksMS-0.0.1-SNAPSHOT.jar
+
+3. Open the browser on:
+
+	localhost:8080
