@@ -32,3 +32,8 @@ Usage:
 3. Open the browser on:
 
 	localhost:8080
+
+
+Web app deployed on Heroku:
+
+[https://booksms.herokuapp.com/](https://booksms.herokuapp.com/)
