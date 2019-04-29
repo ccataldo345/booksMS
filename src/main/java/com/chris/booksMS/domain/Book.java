@@ -7,11 +7,8 @@ import java.util.List;
 public class Book {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // https://stackoverflow.com/questions/39807483/sequence-hibernate-sequence-not-found-sql-statement
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-
     private String title;
     private String author;
     private String isbn;
