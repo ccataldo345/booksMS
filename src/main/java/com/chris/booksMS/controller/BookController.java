@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Controller
 public class BookController {
@@ -47,13 +46,9 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}")
-    public String updateBook(@PathVariable("id") Long id, @ModelAttribute Book book, Model model) throws Throwable {
-        Book persistedBook = bookRepository.findById(id).orElseThrow(new Supplier<Throwable>() {
-            @Override
-            public Throwable get() {
-                return new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-        });
+    public String updateBook(@PathVariable("id") Long id, @ModelAttribute Book book, Model model) {
+        Book persistedBook = bookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No book found with this id"));
         persistedBook.setTitle(book.getTitle());
         persistedBook.setIsbn(book.getIsbn());
         persistedBook.setAuthor(book.getAuthor());
@@ -64,13 +59,9 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public String editBook(@PathVariable("id") Long id, Model model) throws Throwable {
-        Book book = bookRepository.findById(id).orElseThrow(new Supplier<Throwable>() {
-            @Override
-            public Throwable get() {
-                return new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-        });
+    public String editBook(@PathVariable("id") Long id, Model model) {
+        Book book = bookRepository.findById(id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No book found with this id"));
         model.addAttribute("book", book);
         model.addAttribute("appName", appName);
         model.addAttribute("comment", new Comment());
@@ -78,13 +69,9 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/comment")
-    public String addComment(@PathVariable("id") Long id, @ModelAttribute Comment comment, Model model) throws Throwable {
-        Book book = bookRepository.findById(id).orElseThrow(new Supplier<Throwable>() {
-            @Override
-            public Throwable get() {
-                return new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-        });
+    public String addComment(@PathVariable("id") Long id, @ModelAttribute Comment comment, Model model) {
+        Book book = bookRepository.findById(id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No book found with this id"));
         List<Comment> comments = book.getComments();
         if (comments == null) {
             comments = new ArrayList<>();
@@ -111,5 +98,4 @@ public class BookController {
         bookRepository.save(book);
         return "redirect:/";
     }
-
 }
