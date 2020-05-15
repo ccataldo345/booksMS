@@ -16,7 +16,7 @@ public class Book {
     private String author;
     private String isbn;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
 }
