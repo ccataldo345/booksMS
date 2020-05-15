@@ -22,19 +22,22 @@
 
             <form th:action="@{'/book/{id}'(id=${book.getId()})}" th:object="${book}" method="post">
                 <div class="form-group">
-                    <label for="title">Title</label>
-                    <input name="title" type="text" class="form-control" id="title" placeholder="Title"
-                           th:value="${book.getTitle()}">
+                    <label>Title</label>
+                    <input name="title" type="text" class="form-control" id="title" th:value="${book.getTitle()}"
+                           th:field="*{title}" placeholder="Title">
+                    <p style="color:red;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
                 </div>
                 <div class="form-group">
-                    <label for="author">Author</label>
-                    <input name="author" type="text" class="form-control" id="author" placeholder="Author"
-                           th:value="${book.getAuthor()}">
+                    <label>Author</label>
+                    <input name="author" type="text" class="form-control" id="author"  th:value="${book.getAuthor()}"
+                           th:field="*{author}" placeholder="Author">
+                    <p style="color:red;" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" />
                 </div>
                 <div class="form-group">
-                    <label for="isbn">ISBN</label>
-                    <input name="isbn" type="text" class="form-control" id="isbn" placeholder="ISBN"
-                           th:value="${book.getIsbn()}">
+                    <label>ISBN</label>
+                    <input name="isbn" type="text" class="form-control" id="isbn"  th:value="${book.getIsbn()}"
+                           th:field="*{isbn}" placeholder="ISBN">
+                    <p style="color:red;" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" />
                 </div>
                 <button type="submit" class="btn btn-warning float-right">Update</button>
             </form>
@@ -44,21 +47,22 @@
             <h2>Comments</h2>
             <form th:action="@{'/book/{id}/comment'(id=${book.getId()})}" th:object="${comment}" method="post">
                 <div class="form-group">
-                    <label for="value">Comment</label>
-                    <textarea th:field="*{commentText}" name="text" class="form-control" id="value" rows="6"
-                              placeholder="Comment"></textarea>
+                    <label>Comment</label>
+                    <textarea name="text" class="form-control" id="value" rows="6"
+                              maxlength="50" th:field="*{commentText}" placeholder="Comment"></textarea>
+                    <p style="color:red;" th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}" />
                     </br>
                     <button type="submit" class="btn btn-warning float-right">Add comment</button>
                 </div>
             </form>
-            <table class="table table-borderless" th:each="c : ${book.getComments()}">
+            <table class="table table-bordered" th:each="c : ${book.getComments()}">
                 <tbody>
                 <tr>
-                    <td>Date</td>
+                    <td>Date:</td>
                     <td th:text="${#dates.format(c.getDate(), 'dd-MM-yyyy HH:mm:ss')}"></td>
                 </tr>
                 <tr>
-                    <td>Comment</td>
+                    <td>Comment:</td>
                     <td th:text="${c.getCommentText()}"></td>
                 </tr>
                 </tbody>
